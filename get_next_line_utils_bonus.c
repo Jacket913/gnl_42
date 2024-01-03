@@ -6,11 +6,11 @@
 /*   By: jacket <jacket@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 10:45:09 by jacket            #+#    #+#             */
-/*   Updated: 2024/01/03 15:11:21 by jacket           ###   ########.fr       */
+/*   Updated: 2024/01/03 15:31:10 by jacket           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 size_t	ft_strlen (const char *s)
 {
@@ -20,23 +20,6 @@ size_t	ft_strlen (const char *s)
 	while (*s++)
 		i++;
 	return (i);
-}
-
-char	*ft_strdup(const char *s)
-{
-	char	*ptr;
-	int		i;
-
-	if (!(ptr = (char *) malloc(sizeof(*s) * (ft_strlen(s) + 1))))
-		return (NULL);
-	i = 0;
-	while (s[i])
-	{
-		ptr[i] = s[i];
-		i++;
-	}
-	ptr[i] = '\0';
-	return(ptr);
 }
 
 void	ft_bzero(void *s, size_t n)

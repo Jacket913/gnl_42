@@ -6,11 +6,11 @@
 /*   By: jacket <jacket@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 10:45:02 by jacket            #+#    #+#             */
-/*   Updated: 2024/01/03 15:11:19 by jacket           ###   ########.fr       */
+/*   Updated: 2024/01/03 15:30:39 by jacket           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*clean_buffer(char *buffer, char *b_read)
 {
