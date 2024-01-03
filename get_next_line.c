@@ -6,18 +6,18 @@
 /*   By: jacket <jacket@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 10:45:02 by jacket            #+#    #+#             */
-/*   Updated: 2024/01/03 15:11:18 by jacket           ###   ########.fr       */
+/*   Updated: 2024/01/03 20:30:20 by jacket           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*clean_buffer(char *buffer, char *b_read)
+char	*clean_buffer(char *sbuffer, char *buffer)
 {
 	char	*tmp;
 
-	tmp = ft_strjoin(buffer, b_read);
-	free(buffer);
+	tmp = ft_strjoin(sbuffer, buffer);
+	free(sbuffer);
 	return (tmp);
 }
 
@@ -66,13 +66,13 @@ char	*get_next(char *buffer)
 	return (line);
 }
 
-char	*read_file(char *bf, int fd)
+char	*read_file(char *sbuffer, int fd)
 {
 	char	*buffer;
 	int		b_read;
 
-	if (!bf)
-		bf = ft_calloc(1,1);
+	if (!sbuffer)
+		sbuffer = ft_calloc(1,1);
 	buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	b_read = 1;
 	while (b_read > 0)
@@ -81,27 +81,27 @@ char	*read_file(char *bf, int fd)
 		if (b_read == -1)
 			return (free(buffer), NULL);
 		buffer[b_read] = '\0';
-		bf = clean_buffer(bf, buffer);
+		sbuffer = clean_buffer(sbuffer, buffer);
 		if(ft_strchr(buffer, '\n'))
 			break;
 	}
 	free(buffer);
-	return (bf);
+	return (sbuffer);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*bf;
+	static char	*sbuffer;
 	char		*line;
 
 	if (fd < 0 || read(fd, 0, 0) < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	if (!bf)
-		bf = ft_calloc(1, sizeof(char));
-	bf = read_file(bf, fd);
-	if (!bf)
-		return (free(bf), NULL);
-	line = get_line(bf);
-	bf = get_next(bf);
+	if (!sbuffer)
+		sbuffer = ft_calloc(1, sizeof(char));
+	sbuffer = read_file(sbuffer, fd);
+	if (!sbuffer)
+		return (free(sbuffer), NULL);
+	line = get_line(sbuffer);
+	sbuffer = get_next(sbuffer);
 	return (line);
 }
