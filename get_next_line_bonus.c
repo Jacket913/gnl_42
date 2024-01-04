@@ -6,7 +6,7 @@
 /*   By: jacket <jacket@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 10:45:02 by jacket            #+#    #+#             */
-/*   Updated: 2024/01/03 21:12:17 by jacket           ###   ########.fr       */
+/*   Updated: 2024/01/04 07:44:26 by jacket           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ char	*get_line(char *sbuffer)
 		return (NULL);
 	while (sbuffer[i] && sbuffer[i] != '\n')
 		i++;
-	line = ft_calloc((i + 2), sizeof(char));
+	if (sbuffer[i] == '\n')
+		line = ft_calloc((i + 2), sizeof(char));
+	else
+		line = ft_calloc((i + 1), sizeof(char));
 	i = 0;
 	while (sbuffer[i] && sbuffer[i] != '\n')
 	{
@@ -95,8 +98,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	if (!sbuffer)
 		sbuffer = ft_calloc(1, sizeof(char));
-	sbuffer = read_file(sbuffer, fd);//Try to combine 101 && 102 as usual
-	if (!sbuffer)
+	if (!(sbuffer = read_file(sbuffer, fd)))//Try to combine 101 && 102 as usual
 		return (free(sbuffer), NULL);
 	line = get_line(sbuffer);
 	sbuffer = get_next(sbuffer);

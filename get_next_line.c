@@ -6,7 +6,7 @@
 /*   By: jacket <jacket@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 10:45:02 by jacket            #+#    #+#             */
-/*   Updated: 2024/01/03 20:30:20 by jacket           ###   ########.fr       */
+/*   Updated: 2024/01/04 07:44:05 by jacket           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,48 +21,48 @@ char	*clean_buffer(char *sbuffer, char *buffer)
 	return (tmp);
 }
 
-char	*get_line(char *buffer)
+char	*get_line(char *sbuffer)
 {
 	char	*line;
 	int		i;
 
 	i = 0;
-	if(!buffer[i])
+	if(!sbuffer[i])
 		return (NULL);
-	while (buffer[i] && buffer[i] != '\n')
+	while (sbuffer[i] && sbuffer[i] != '\n')
 		i++;
-	if (buffer[i] == '\n')
+	if (sbuffer[i] == '\n')
 		line = ft_calloc((i + 2), sizeof(char));
 	else
 		line = ft_calloc((i + 1), sizeof(char));
 	i = 0;
-	while (buffer[i] && buffer[i] != '\n')
+	while (sbuffer[i] && sbuffer[i] != '\n')
 	{
-		line[i] = buffer[i];
+		line[i] = sbuffer[i];
 		i++;
 	}
-	if (buffer[i] == '\n')
+	if (sbuffer[i] == '\n')
 		line[i] = '\n';
 	return(line);
 }
 
-char	*get_next(char *buffer)
+char	*get_next(char *sbuffer)
 {
 	char	*line;
 	int		i;
 	int		j;
 
 	i = 0;
-	while (buffer[i] && buffer[i] != '\n')
+	while (sbuffer[i] && sbuffer[i] != '\n')
 		i++;
-	if (!buffer[i])
-		return(free(buffer), NULL);
-	line = ft_calloc((ft_strlen(buffer) - i + 1), sizeof(char));
+	if (!sbuffer[i])
+		return(free(sbuffer), NULL);
+	line = ft_calloc((ft_strlen(sbuffer) - i + 1), sizeof(char));
 	i++;
 	j = 0;
-	while (buffer[i])
-		line[j++] = buffer[i++];
-	free(buffer);
+	while (sbuffer[i])
+		line[j++] = sbuffer[i++];
+	free(sbuffer);
 	return (line);
 }
 
@@ -98,8 +98,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	if (!sbuffer)
 		sbuffer = ft_calloc(1, sizeof(char));
-	sbuffer = read_file(sbuffer, fd);
-	if (!sbuffer)
+	if (!(sbuffer = read_file(sbuffer, fd)))//Try to combine 101 && 102 as usual
 		return (free(sbuffer), NULL);
 	line = get_line(sbuffer);
 	sbuffer = get_next(sbuffer);
