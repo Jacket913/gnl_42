@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jacket <jacket@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gmoulin <gmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/03 10:45:09 by jacket            #+#    #+#             */
-/*   Updated: 2024/01/03 15:31:10 by jacket           ###   ########.fr       */
+/*   Created: 2024/01/11 16:17:56 by gmoulin           #+#    #+#             */
+/*   Updated: 2024/01/11 16:19:20 by gmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-size_t	ft_strlen (const char *s)
+size_t	ft_strlen(const char *s)
 {
 	size_t	i;
 
@@ -37,12 +37,10 @@ void	*ft_calloc(size_t nmemb, size_t size)
 {
 	void	*ptr;
 
-	if (!nmemb || !size)
-	{
-		nmemb = 1;
-		size = 1;
-	}
-	if (!(ptr = (void *) malloc(nmemb * size)))
+	if (size && nmemb && (size * nmemb < size || size * nmemb < nmemb))
+		return (NULL);
+	ptr = (void *) malloc(nmemb * size);
+	if (!ptr)
 		return (NULL);
 	ft_bzero(ptr, nmemb * size);
 	return (ptr);
@@ -50,13 +48,16 @@ void	*ft_calloc(size_t nmemb, size_t size)
 
 char	*ft_strchr(const char *s, int c)
 {
+	char	a;
+
+	a = (char)c;
 	while (*s)
 	{
-		if (*s == c)
+		if (*s == a)
 			return ((char *) s);
 		s++;
 	}
-	if (*s == c)
+	if (*s == a)
 		return ((char *) s);
 	return (NULL);
 }
@@ -72,9 +73,9 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	ptr = (unsigned char *) malloc(sizeof(char) * bkplen + 1);
 	if (!ptr)
 		return (NULL);
-	while(*s1)
+	while (*s1)
 		*ptr++ = *s1++;
-	while(*s2)
+	while (*s2)
 		*ptr++ = *s2++;
 	*ptr = '\0';
 	ptr -= bkplen;
