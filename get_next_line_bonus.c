@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andymalgonne <andymalgonne@student.42.f    +#+  +:+       +#+        */
+/*   By: gmoulin <gmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 16:18:39 by gmoulin           #+#    #+#             */
-/*   Updated: 2024/02/19 17:53:21 by andymalgonn      ###   ########.fr       */
+/*   Updated: 2024/02/20 09:26:14 by gmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
