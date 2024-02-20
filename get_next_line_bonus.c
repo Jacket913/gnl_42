@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmoulin <gmoulin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: andymalgonne <andymalgonne@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 16:18:39 by gmoulin           #+#    #+#             */
-/*   Updated: 2024/01/11 16:18:42 by gmoulin          ###   ########.fr       */
+/*   Updated: 2024/02/19 17:53:21 by andymalgonn      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*get_line(char *sbuffer)
 	int		i;
 
 	i = 0;
-	if(!sbuffer[i])
+	if (!sbuffer[i])
 		return (NULL);
 	while (sbuffer[i] && sbuffer[i] != '\n')
 		i++;
@@ -43,7 +43,7 @@ char	*get_line(char *sbuffer)
 	}
 	if (sbuffer[i] == '\n')
 		line[i] = '\n';
-	return(line);
+	return (line);
 }
 
 char	*get_next(char *sbuffer)
@@ -56,7 +56,7 @@ char	*get_next(char *sbuffer)
 	while (sbuffer[i] && sbuffer[i] != '\n')
 		i++;
 	if (!sbuffer[i])
-		return(free(sbuffer), NULL);
+		return (free(sbuffer), NULL);
 	line = ft_calloc((ft_strlen(sbuffer) - i + 1), sizeof(char));
 	i++;
 	j = 0;
@@ -72,7 +72,7 @@ char	*read_file(char *sbuffer, int fd)
 	int		b_read;
 
 	if (!sbuffer)
-		sbuffer = ft_calloc(1,1);
+		sbuffer = ft_calloc(1, 1);
 	buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	b_read = 1;
 	while (b_read > 0)
@@ -82,8 +82,8 @@ char	*read_file(char *sbuffer, int fd)
 			return (free(buffer), NULL);
 		buffer[b_read] = '\0';
 		sbuffer = clean_buffer(sbuffer, buffer);
-		if(ft_strchr(buffer, '\n'))
-			break;
+		if (ft_strchr(buffer, '\n'))
+			break ;
 	}
 	free(buffer);
 	return (sbuffer);
@@ -91,16 +91,17 @@ char	*read_file(char *sbuffer, int fd)
 
 char	*get_next_line(int fd)
 {
-	static char	*sbuffer;
+	static char	*sbuffer[MAX_FD];
 	char		*line;
 
-	if (fd < 0 || read(fd, 0, 0) < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || fd >= MAX_FD || read(fd, 0, 0) < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	if (!sbuffer)
-		sbuffer = ft_calloc(1, sizeof(char));
-	if (!(sbuffer = read_file(sbuffer, fd)))//Try to combine 101 && 102 as usual
-		return (free(sbuffer), NULL);
-	line = get_line(sbuffer);
-	sbuffer = get_next(sbuffer);
+	if (!sbuffer[fd])
+		sbuffer[fd] = ft_calloc(1, sizeof(char));
+	sbuffer[fd] = read_file(sbuffer[fd], fd);
+	if (!(sbuffer[fd]))
+		return (free(sbuffer[fd]), NULL);
+	line = get_line(sbuffer[fd]);
+	sbuffer[fd] = get_next(sbuffer[fd]);
 	return (line);
 }
